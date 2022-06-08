@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment_5</title>
+    <style type="text/css">
+        body{
+    backgrounD-color: #ffe0cc;
+    }
+    </style>
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+        });
+        
+//This function detects the user's browser 
+        function DetectBrowser() {
+            $('#divBrowserResult').empty();
+            if (navigator.userAgent.search("MSIE") >= 0) {
+                $('#divBrowserResult').html("You are using a less common browser.");
+            } else if (navigator.userAgent.search("Chrome") >= 0) {
+                $('#divBrowserResult').html("You are Using :- Chrome");
+            } else if (navigator.userAgent.search("Firefox") >= 0) {
+                $('#divBrowserResult').html("You are Using :-FireFox");
+            } else if (navigator.userAgent.search("Safari") >= 0 && navigator.userAgent.search("Chrome") < 0) {
+                $('#divBrowserResult').html("You are Using :-Safari");
+            } else if (navigator.userAgent.search("Opera") >= 0) {
+                $('#divBrowserResult').html("You are using a less common browser.");
+            };
+        }
+
+        //Does the calculation for the part two 
+        function DoMath() {
+
+            var userInputs = [];
+            userInputs[0] = $('#txt1').val();
+            userInputs[1] = $('#txt2').val();
+            userInputs[2] = $('#txt3').val();
+            userOption = $('input[name="chkPart2"]:checked').val();
+
+            $('#divMathResult').empty()
+            if (userOption == "add") { //Adds Values
+
+                Calculation = parseFloat(userInputs[0]) + parseFloat(userInputs[1]) + parseFloat(userInputs[2])
+
+                $('#divMathResult').html("The result is:- " + Calculation)
+            } else if (userOption == "multiply") { //Multiply Values
+                Calculation = parseFloat(userInputs[0]) * parseFloat(userInputs[1]) * parseFloat(userInputs[2])
+
+                $('#divMathResult').html("The result is:- " + Calculation)
+            } else if (userOption == "average") {  //Divide Values
+                Calculation = parseFloat(userInputs[0]) / parseFloat(userInputs[1]) / parseFloat(userInputs[2])
+
+                $('#divMathResult').html("The result is:- " + Calculation)
+            };
+        }
+    </script>
+</head>
+
+<body>
+
+    <h1>Assignment #6</h1>
+    <h2>Part 1</h2>
+    <button id="btnDetect" onclick="DetectBrowser()">What Browser Am I Using?</button>
+    <div id="divBrowserResult"></div>
+    <hr>
+    <h2>Part 2</h2>
+    <p>
+        Enter 3 Numbers:<br>
+        1. <input type="text" id="txt1"> <br>
+        2. <input type="text" id="txt2"><br>
+        3. <input type="text" id="txt3"><br>
+    </p>
+    <p>
+        Add the Numbers <input type="radio" id="chkPart2" name="chkPart2" value="add"><br>
+        Multiply the Numbers <input type="radio" id="chkPart2" name="chkPart2" value="multiply"><br>
+        Average the Numbers <input type="radio" name="chkPart2" id="chkPart2" value="average"><br>
+    </p>
+    <button id="btnDoMath" onclick="DoMath()">Do Math!</button>
+    <hr>
+    <div id="divMathResult"></div>
+
+</body></html>
