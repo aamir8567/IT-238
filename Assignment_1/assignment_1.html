@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aamir Patel Assignment 1</title>
+    <style>
+        .app_main{
+            background: #cccccc;
+        }
+        form {
+            color:blue;
+        }
+        .divResults{
+            color: #800000;
+            background: #e6e6ff;
+            font-size: 22px;    
+        }
+    </style>
+</head>
+
+<body>
+    <h2>Aamir Patel<br>
+        Assignment 1
+    </h2>
+    <a class="app_main">
+    <img src='calculator.jpg'> <br><br>
+    <form>
+        <label for="MPH">Please enter the Miles Per Hour:</label>
+        <input type="text" id="MPH" name="MPH"><br>
+        <label for="SelCal">Please Select the Conversion</label>
+        <select name="SelCal" id="SelConversion">
+            <option value="KMPH">Kilometers Per Hour</option>
+            <option value="MPS">Meters Per Second</option>
+            <option value="FPS">Feet Per Second</option>
+        </select><br>
+
+        <button type="button" value="Submit" onclick="Convertor()">Submit</button>
+    </form>
+    </a>
+            <div id="divResults" class="divResults"> </div>
+      
+    <script>
+        
+        function Convertor() {
+            var mph;
+            var calculation;
+            var option;
+            var input;
+            var output;
+            
+            mph = document.getElementById("MPH").value;
+
+            mph = parseFloat(mph);
+            mph = mph.toFixed(2);
+
+           option = document.getElementById("SelConversion").value;
+            
+           if(option == "KMPH") {
+               calculation = mph * 1.61;
+               calculation = calculation.toFixed(2);
+               output = (mph + " MPH is: "+ calculation + " Kilometers per hour" );
+               document.getElementById("divResults").innerHTML = output;
+           } 
+           else if (option =="MPS"){
+               calculation = mph * 0.447;
+               calculation = calculation.toFixed(2);
+               output = (mph + " MPH is: "+ calculation + " Meters per second" );
+               document.getElementById("divResults").innerHTML = output;
+           }
+           else if (option =="FPS"){
+               calculation = mph * 1.467;
+               calculation = calculation.toFixed(2);
+               output = (mph + " MPH is: "+ calculation + " Feet per second" );
+               document.getElementById("divResults").innerHTML = output;
+           }
+        } //End of the Function
+
+    </script>
+</body>
+
+</html>
