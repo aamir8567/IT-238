@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8" />
+	<title>Final Exam</title>
+	<style type="text/css">
+		body {}
+
+		.ui-datepicker {
+			width: 12em;
+			color: Black;
+			background: lightgray;
+		}
+
+		.loading {
+			display: none
+		}
+
+		body {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			min-height: 100vh;
+			background: #03a9f4;
+		}
+
+
+		.loader {
+			background: rgba(0, 0, 0, .2);
+			height: 200px;
+			position: absolute;
+			width: 200px;
+
+		}
+
+		.loader span {
+			position: absolute;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			left: 0;
+		}
+
+		.loader span:nth-child(1) {
+			transform: rotate(0deg);
+		}
+
+		.loader span:nth-child(2) {
+			transform: rotate(90deg);
+		}
+
+		.loader span:nth-child(3) {
+			transform: rotate(180deg);
+		}
+
+		.loader span:nth-child(4) {
+			transform: rotate(270deg);
+		}
+
+		.loader span:before {
+			content: '';
+			position: absolute;
+			width: 100%;
+			height: 60px;
+			top: 0;
+			left: 0;
+			animation: animate 2s linear infinite;
+
+			background: #fff;
+			transform: scaleX(0);
+		}
+
+		.loader span:nth-child(1):before {
+			animation-delay: 0s;
+		}
+
+		.loader span:nth-child(2):before {
+			animation-delay: 0.5s;
+		}
+
+		.loader span:nth-child(3):before {
+			animation-delay: 1s;
+		}
+
+		.loader span:nth-child(4):before {
+			animation-delay: 1.5s;
+		}
+
+		@Keyframes animate {
+			0% {
+				transform: scaleX(0);
+				transform-origin: left;
+			}
+
+			25% {
+				transform: scaleX(1);
+				transform-origin: left;
+			}
+
+			25.00001% {
+
+				transform-origin: right;
+			}
+
+			50%,
+			100% {
+				transform: scaleX(0);
+				transform-origin: right;
+			}
+		}
+
+	</style>
+	<stype>
+		<link href='https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/themes/ui-lightness/jquery-ui.css' rel='stylesheet'>
+	</stype>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script>
+		//For Date picker
+
+		$(document).ready(function() {
+
+
+			$('#txtArrivalDate').datepicker({
+
+				minDate: 0,
+				dateFormat: 'mm/dd/yy',
+				onSelect: function(date) {
+					var date1 = $('#txtArrivalDate').datepicker('getDate');
+					date1 = date1.getDate();
+
+				},
+
+			}); //end of ArrivalDate datepicker
+			$('#txtDepartureDate').datepicker({
+
+				dateFormat: 'mm/dd/yy',
+				beforeShow: function(input, inst) {
+					var mindate = $('#txtArrivalDate').datepicker('getDate');
+
+					$('#txtDepartureDate').datepicker('option', 'minDate', mindate);
+					var maxdate = new Date(mindate.valueOf());
+					maxdate.setDate(maxdate.getDate() + 7);
+					$('#txtDepartureDate').datepicker('option', 'maxDate', maxdate);
+				}, //end of beforeShow
+
+				onSelect: function(date) {
+					var date2 = $('#txtDepartureDate').datepicker('getDate');
+					date2 = date2.getDate();
+
+				},
+			}); //end of departureDate datepicker
+
+
+			$('#selNumGuests').change(function() {
+				var numGuests = $('#selNumGuests').find(":selected").text();
+
+			}); //end of selNumGuests .change function
+
+
+
+		}); //end of Document Ready function
+
+		function loadingMenu() {
+
+			$('#btnsubmit').click(function() {
+				$('#animation').removeClass("loading").delay(2000).queue(function() {
+					$('#animation').addClass("loading").delay(100);
+					Calculate();
+					$('#divResults').html("<p>Your total cose for this Hotel Reservation is --> $" + calculation + "</p>").dequeue();
+				}); //end of queue  method
+			}); //end of click method
+
+		}; //end of the menu which shows a loading menu
+
+		function Calculate() {
+			var roomType = $('#selRoomType').val();
+			var roomprice = 0;
+			var totDays = 0;
+			var numGuests = $('#selNumGuests').find(":selected").text();
+			var toDate = $('#txtDepartureDate').datepicker('getDate');
+			var fromDate = $('#txtArrivalDate').datepicker('getDate');
+			var oneDay = 24 * 60 * 60 * 1000;
+
+			if (toDate && fromDate) {
+				totDays = Math.round(Math.abs((toDate.getTime() - fromDate.getTime()) / (oneDay)));
+			}; //end of if statement which counts total days 
+
+			if (roomType == 'Regular') {
+				roomprice = 150;
+			} else if (roomType == 'Deluxe') {
+				roomprice = 240;
+			} else if (roomType == 'Suite') {
+				roomprice = 400;
+			};
+
+			var calculation = ((roomprice * totDays) + (numGuests * 25 * totDays));
+
+			$('#divResults').html("<p>Your total cost for this Hotel Reservation is --> $" + calculation + "</p>");
+		}; //end of the Calculate function
+
+	</script>
+</head>
+
+<body>
+	<div class="entire-page">
+		<h1>Final Exam</h1>
+		<h2>Aamir Patel</h2>
+		<h2>Hotel Reservation</h2>
+
+		<div class="loader loading" id="animation">
+
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+		<form id="FrmReservation" onsubmit="return false">
+
+			<label for="txtFname">First name:-</label>
+			<input type="text" name="txtFname" id="txtFname" /> <br /><br />
+			<label for="txtEmail">Email:- </label>
+			<input type="text" name="txtEmail" id="txtEmail" /> <br /><br />
+
+			<label for="txtArrivalDate">Arrival Date:-</label>
+
+			<input type="text" name="txtArrivalDate" id="txtArrivalDate" /> <br /><br />
+			<label for="txtDepartureDate">Departure Date:-</label>
+
+			<input type="text" name="txtDepartureDate" id="txtDepartureDate" /> <br /><br />
+
+			<label for="selRoomType">Type of Room:-</label>
+			<select name="RoomType" name="selRoomType" id="selRoomType">
+				<option value="Regular">Regular ($150)</option>
+				<option value="Deluxe">Deluxe ($240)</option>
+				<option value="Suite">Suite ($400)</option>
+			</select><br /><br />
+
+			<label for="selNumGuests"> Number of guests:-</label>
+			<select id="selNumGuests" name="selNumGuests">
+				<option> 0</option>
+				<option>1</option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+				<option>5</option>
+			</select> <br> <br>
+
+			<button onclick="loadingMenu()" id="btnsubmit">Submit</button>
+		</form>
+		<div id="divResults"> </div>
+	</div><!-- end of entire-page Div -->
+</body>
+
+</html><!-- end of html document -->
+
+<!-- 
+	For this assignment we had to do some self-research on the Date Picker tool and implement it in the project. Upon research I found out that this is a very old tool which is still quite popular. The oldest post that I could find about this tool was one of a reddit question which was posted in June of 2010. The fact that this tool is still getting used shows how simple and easy it is to use, and the research and implementation of the tool did show its simplicity. Not only this tool is simple to use, but there is also a lot of people who have made they own versions of this tool (API). One of the prime examples of this is PickaDate.js I came across this api through an article, and I think it is very intuitive and easy to use. 
+
+	Not everything is great about the stock jQuery Date Picker tool, one to the major flaws that I could instantly see if that if you leave it stock/no CSS modifications, it does not look good at all. Although the looks does not affect its functionality, it is still important to spend some time to modify some visual aspects of the tool. Another thing that I could instantly notice is the repetitiveness of putting the option tag, before putting the actual attribute that you want to modify in the inline aspect of the tool, you should just be able to call your selector then .datepicker(value) rather than doing selecter.datepicker({‘option”,”attribute’,’value’}); this just creates a lot of unnecessary repetitiveness. In conclusion, the tool overall is good, and very customizable, but having a good-looking version of this tool saved in a txt document somewhere will save your eyes a lot of torture.
+
+-->
