@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <Title>Aamir Patel Assignment 3</Title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+
+            $('#votingImg img').hover(function() {
+                $(this).addClass('img-border');
+            }, function() {
+                $(this).removeClass('img-border')
+            }); //End of Hover function
+        }); //End of Ready Function
+
+        function imageSetHalf() {
+            $('#votingImg img').height('356px');
+            $('#votingImg img').width('544px');
+        }; //End of imageSetHalf Function
+
+        function imageSetover3() {
+            $('#votingImg img').height('237px');
+            $('#votingImg img').width('363px');
+        }; // End of imageSetover3 Function
+
+        function imageRestore() {
+            $('#votingImg img').height('712px');
+            $('#votingImg img').width('1088px');
+        }; // End of imageRestore Function
+
+        function changeFont() {
+            var initialFont, finalFont;
+            initialFont = document.getElementById('font').value;
+            if (initialFont == "SelectAFont") {
+                alert("works");
+            } else if (initialFont == "helvetica") {
+                $('#about_voting').css('font-family', 'Helvetica')
+            } else if (initialFont == "Arial") {
+                $('#about_voting').css('font-family', 'Arial')
+            } else if (initialFont == "TimesNewRoman") {
+                $('#about_voting').css('font-family', 'Times New Roman')
+            }
+        }; // End of changeFont Function
+
+        function ageCalculator() {
+            var age, calculatedYear;
+            age = document.getElementById('txtbirthYear').value;
+            age = parseInt(age);
+            calculatedYear = 2020 - age;
+            if (calculatedYear >= 18) {
+                $('#about_voting').append('<p>Because you will be ' + calculatedYear + ' years old in 2020, you are eligle to vote.</p>');
+            } else if (calculatedYear < 18) {
+                $('#about_voting').append('<p> Because you are ' + calculatedYear + ' years old, you are NOT eligible to vote.</p>');
+            };
+        }; //End of ageCalculator function
+    </script>
+</head>
+
+<body>
+    <div id="main_page">
+        <h1 style="border-color:black; border-style: solid; background-color: lightgray">Why It's So Important
+        </h1>
+        <div id="about_voting" style="border-top: solid">
+            <P>To Understand the importance of voting we first have to know why we vote. We vote to select a specific person or team to
+                give them the ability to run our country. By voting we give them the approval to lead the way. If we dont vote we are
+                giving up our voice and maybe that person is not the right person for the job.
+            </P>
+            <p>Not only selecting the right person for the job is important, by not voting we are throwing out our money that we pay in tax
+                because the wrong person will not spend the money intead that person will put it in their pockets. Another reason why voting is important is because it is our chance to demand a change. </p>
+        </div>
+        <a id="votingImg">
+            <img src="vote_by_mail.jpg" alt="Picture of voting">
+        </a> <!-- End of Voting Img a -->
+        <br>
+        <a id="imageAdjust">
+            <button value="Set Image to Half" onclick="imageSetHalf()" id="btnHalf">Shrink the Image to Half</button>
+            <button value="Set Image to 1/3" onclick="imageSetover3()" id="btnOneThird">Shrink the Image to 1/3</button>
+            <button value="Restore the Image" onclick="imageRestore()" id="btnRestore">Restore the Image</button>
+        </a> <!-- End of ImageAdjust a -->
+        <br> <br>
+        <a id="birthYear">
+            Please Enter your birth year:
+            <input type="text" id="txtbirthYear"> <br> <br>
+            <button onclick="ageCalculator()" id="btnStartAgeCalc">Find Out If You Can Vote</button>
+        </a> <!-- End of BirthYear a -->
+        <br><br>
+        <a id="fontSelect">
+            <label for="font">Choose a font:</label>
+            <select name="font" id="font" onchange="changeFont()">
+                <option value="SelectAFont">Select a Font</option>
+                <option value="helvetica">Helvetica</option>
+                <option value="Arial">Arial Narrow</option>
+                <option value="TimesNewRoman">Times New Roman</option>
+            </select>
+        </a> <!-- End of fontSelect a -->
+        <br>
+
+    </div>
+    <!--End Main_page Div a -->
+</body></html>
